@@ -23,7 +23,7 @@ _attachments/   images and PDFs referenced by wiki pages
 
 Drop a source file into `.raw/`, then tell Claude: "ingest [filename]".
 
-Ask any question. Claude reads the index first, then drills into relevant pages.
+Ask any question. Claude reads `wiki/hot.md` first, then Globs/Greps the relevant folder, then drills into specific pages.
 
 Run `/wiki` to scaffold a new vault or check setup status.
 
@@ -39,8 +39,8 @@ Path: /path/to/this/vault
 
 When you need context not already in this project:
 1. Read wiki/hot.md first (recent context, ~500 words)
-2. If not enough, read wiki/index.md
-3. If you need domain specifics, read wiki/<domain>/_index.md
+2. If not enough, Glob the relevant folder (e.g. wiki/concepts/*.md) or Grep frontmatter tags
+3. If you need domain specifics, read wiki/<domain>/_index.md (scoped sub-index)
 4. Only then read individual wiki pages
 
 Do NOT read the wiki for general coding questions or things already in this project.

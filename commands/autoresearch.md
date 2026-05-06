@@ -14,6 +14,6 @@ Before starting, read `skills/autoresearch/references/program.md` to load the re
 
 If no vault is set up yet, say: "No wiki vault found. Run /wiki first to set one up."
 
-After research is complete, update wiki/index.md, wiki/log.md, and wiki/hot.md.
+After research is complete, update wiki/log.md and wiki/hot.md. Do not create or update a `wiki/index.md` hub page — it collapses Obsidian's graph view and duplicates the native file explorer.
 
 Report how many pages were created and what the key findings are.

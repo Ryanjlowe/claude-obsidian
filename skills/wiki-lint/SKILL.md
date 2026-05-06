@@ -24,7 +24,7 @@ Work through these in order:
 5. **Missing cross-references**. Entities mentioned in a page but not linked.
 6. **Frontmatter gaps**. Pages missing required fields (type, status, created, updated, tags).
 7. **Empty sections**. Headings with no content underneath.
-8. **Stale index entries**. Items in `wiki/index.md` pointing to renamed or deleted pages.
+8. **Master-hub anti-pattern**. If `wiki/index.md` exists, flag it. A central hub linking every page collapses Obsidian's graph view and duplicates the file explorer / Quick Switcher / tag pane. Suggest deletion. (Per-folder `_index.md` sub-indexes are fine and are NOT flagged.)
 9. **Address validity** (DragonScale Mechanism 2). For every page that has an `address:` frontmatter field, validate the format. See the **Address Validation** section below.
 10. **Semantic tiling** (DragonScale Mechanism 3, opt-in). Flag candidate duplicate pages (across all scanned types, not just concepts) via embedding cosine similarity. See the **Semantic Tiling** section below.
 

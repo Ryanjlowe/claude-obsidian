@@ -3,7 +3,7 @@ name: save
 description: >
   Save the current conversation, answer, or insight into the Obsidian wiki vault as a
   structured note. Analyzes the chat, determines the right note type, creates frontmatter,
-  files it in the correct wiki folder, and updates index, log, and hot cache.
+  files it in the correct wiki folder, and updates the log and hot cache.
   Triggers on: "save this", "save that answer", "/save", "file this",
   "save to wiki", "save this session", "file this conversation", "keep this",
   "save this analysis", "add this to the wiki".
@@ -42,16 +42,18 @@ If the user specifies a type, use that. If not, pick the best fit based on the c
 4. **Extract** all relevant content from the conversation. Rewrite it in declarative present tense (not "the user asked" but the actual content itself).
 5. **Create** the note in the correct folder with full frontmatter.
 6. **Collect links**: identify any wiki pages mentioned in the conversation. Add them to `related` in frontmatter.
-7. **Update** `wiki/index.md`. Add the new entry at the top of the relevant section.
-8. **Append** to `wiki/log.md`. New entry at the TOP:
+7. **Append** to `wiki/log.md`. New entry at the TOP:
    ```
    ## [YYYY-MM-DD] save | Note Title
    - Type: [note type]
    - Location: wiki/[folder]/Note Title.md
    - From: conversation on [brief topic description]
    ```
-9. **Update** `wiki/hot.md` to reflect the new addition.
-10. **Confirm**: "Saved as [[Note Title]] in wiki/[folder]/."
+8. **Update** `wiki/hot.md` to reflect the new addition.
+9. **Confirm**: "Saved as [[Note Title]] in wiki/[folder]/."
+
+> [!note] No `wiki/index.md`
+> Do not create or update `wiki/index.md`. A central hub page that links to every note is an Obsidian graph-view anti-pattern (every page collapses into one hub-and-spoke shape) and duplicates the file explorer, Quick Switcher, and tag pane. Discovery is via folder hierarchy, frontmatter `tags:`, and `related:` cross-links. Domain `_index.md` files (sub-indexes scoped to one folder) are fine.
 
 ---
 

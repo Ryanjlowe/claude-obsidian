@@ -24,7 +24,7 @@ You will be given:
 
 ## Your Process
 
-1. Read `wiki/index.md` to get the full list of pages.
+1. Glob `wiki/**/*.md` to enumerate all pages. Do NOT read or maintain a master `wiki/index.md` — it is an Obsidian graph-view anti-pattern.
 2. For each wiki page, check:
    - Frontmatter has required fields (type, status, created, updated, tags)
    - All wikilinks in the page resolve to real files
@@ -32,7 +32,7 @@ You will be given:
    - Page is linked from at least one other page (no orphans)
 3. Scan for concepts and entities mentioned in multiple pages but lacking their own page.
 4. Scan for unlinked mentions (entity names appearing without `[[` brackets).
-5. Check `wiki/index.md` for stale entries pointing to renamed/deleted files.
+5. If `wiki/index.md` exists, flag it as a master-hub anti-pattern and suggest deletion. (Per-folder `_index.md` sub-indexes are fine.)
 6. Identify pages with status `seed` that have not been updated in over 30 days.
 7. **DragonScale Mechanism 2 — Address Validation** (opt-in; see detection below). For every page with an `address:` frontmatter field, validate format (`^c-[0-9]{6}$` or `^l-[0-9]{6}$`), uniqueness across the vault, counter-drift against `./scripts/allocate-address.sh --peek`, and consistency with `.raw/.manifest.json` `address_map`. Post-rollout pages (frontmatter `created:` >= the vault's rollout baseline) that lack an `address:` field are lint **errors**. Legacy pages are informational.
 8. **DragonScale Mechanism 3 — Semantic Tiling** (opt-in; see detection below). If `scripts/tiling-check.py` is present AND `./scripts/tiling-check.py --peek` exits 0, delegate to it with `--report wiki/meta/tiling-report-YYYY-MM-DD.md`. Surface exit codes 0/2/3/4/10/11 distinctly — do not collapse into "unknown".

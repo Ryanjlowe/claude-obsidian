@@ -263,7 +263,7 @@ Trigger: user describes what the vault is for.
 2. Ask one question: "What is this vault for?"
 3. Create full folder structure under `wiki/`.
 4. Create a domain page + `_index.md` sub-index for each domain.
-5. Create `wiki/overview.md`, `wiki/index.md`, `wiki/log.md`, `wiki/hot.md`.
+5. Create `wiki/overview.md`, `wiki/log.md`, `wiki/hot.md`. Do NOT create `wiki/index.md` — see "No master index" note in Section 5.
 6. Create `_templates/` with templates for each note type.
 7. Apply visual customization (Section 7). Create `.obsidian/snippets/vault-colors.css`.
 8. Create vault CLAUDE.md (template in Section 4.1b).
@@ -420,7 +420,7 @@ Created: YYYY-MM-DD
 - All notes use YAML frontmatter: type, status, created, updated, tags (minimum)
 - Wikilinks use [[Note Name]] format — filenames are unique, no paths needed
 - .raw/ contains source documents — never modify them
-- wiki/index.md is the master catalog — update on every ingest
+- No master wiki/index.md — discovery is via folder hierarchy + frontmatter tags + per-folder _index.md sub-indexes (master hub is an Obsidian graph-view anti-pattern)
 - wiki/log.md is append-only — new entries go at the TOP, never edit past entries
 
 ## Operations
@@ -441,9 +441,8 @@ Trigger: user drops a file into `.raw/` or pastes content.
 5. Create or update concept pages for significant ideas.
 6. Update relevant domain pages and their `_index.md` sub-indexes.
 7. Update `wiki/overview.md` if the big picture changed.
-8. Update `wiki/index.md`. Add entries for all new pages.
-9. Update `wiki/hot.md` with this ingest's context.
-10. Append to `wiki/log.md` (new entries at the TOP):
+8. Update `wiki/hot.md` with this ingest's context.
+9. Append to `wiki/log.md` (new entries at the TOP):
     ```markdown
     ## [2026-04-07] ingest | Source Title
     - Source: `.raw/articles/filename.md`
@@ -452,7 +451,7 @@ Trigger: user drops a file into `.raw/` or pastes content.
     - Pages updated: [[Page 3]], [[Page 4]]
     - Key insight: One sentence on what is new.
     ```
-11. Check for contradictions. Flag with `> [!contradiction]` callouts on both pages.
+10. Check for contradictions. Flag with `> [!contradiction]` callouts on both pages.
 
 A single source typically touches 8-15 wiki pages.
 
@@ -471,7 +470,7 @@ Batch ingest is less interactive. For 30+ sources, check in after every 10.
 ### 4.4 QUERY — Answering Questions
 
 1. Read `wiki/hot.md` first. It may have the answer.
-2. Read `wiki/index.md` to find relevant pages.
+2. Glob the relevant folder (`wiki/concepts/*.md`, `wiki/entities/*.md`, etc.) or Grep frontmatter `tags:` to find candidate pages. There is no master `wiki/index.md` (graph-view anti-pattern); per-folder `_index.md` sub-indexes are fine to consult.
 3. Read those pages (3-5 typically, 10+ is too many).
 4. Synthesize the answer in chat. Cite with wikilinks.
 5. Offer to file as a wiki page in `wiki/questions/`.
@@ -487,33 +486,18 @@ Output: `wiki/meta/lint-report-YYYY-MM-DD.md`. Ask before auto-fixing.
 
 ---
 
-## 5 — Index and Sub-Indexes
+## 5 — Sub-Indexes (no master index)
 
-### wiki/index.md (Master)
+### No master `wiki/index.md`
 
-```markdown
----
-type: meta
-title: "Wiki Index"
-updated: 2026-04-07
----
-# Wiki Index
+This skill set deliberately does NOT maintain a master `wiki/index.md` page. A central hub that links to every other page is an Obsidian graph-view anti-pattern: every page collapses into a hub-and-spoke shape, the graph view stops surfacing real clusters, and the page duplicates the file explorer, Quick Switcher (`⌘O`), and tag pane that Obsidian already provides.
 
-## Domains
-- [[Domain Name]] — description (N sources)
+Discovery instead uses:
 
-## Entities
-- [[Entity Name]] — role (first: [[Source]])
-
-## Concepts
-- [[Concept Name]] — definition (status: developing)
-
-## Sources
-- [[Source Title]] — author, date, type
-
-## Questions
-- [[Question Title]] — answer summary
-```
+- **Folder hierarchy** (`wiki/concepts/`, `wiki/entities/`, `wiki/sources/`, etc.)
+- **Frontmatter `tags:`** queryable via Grep or Obsidian's tag pane
+- **Per-folder `_index.md` sub-indexes** (scoped, not master hubs)
+- **`related:` cross-links** in frontmatter between specific pages
 
 ### Domain Sub-Indexes
 
@@ -557,8 +541,8 @@ Path: ~/Documents/Obsidian Vault
 
 When you need context not already in this project:
 1. Read wiki/hot.md first (recent context, ~500 words)
-2. If not enough, read wiki/index.md (full catalog)
-3. If you need domain specifics, read wiki/<domain>/_index.md
+2. If not enough, Glob the relevant folder or Grep frontmatter tags
+3. If you need domain specifics, read wiki/<domain>/_index.md (scoped sub-index)
 4. Only then read individual wiki pages
 
 Do NOT read the wiki for general coding questions, things already in this
@@ -688,7 +672,7 @@ KEY="your-api-key-here"
 
 **Read a file:**
 ```bash
-curl -sk -H "Authorization: Bearer $KEY" "$API/vault/wiki/index.md"
+curl -sk -H "Authorization: Bearer $KEY" "$API/vault/wiki/hot.md"
 ```
 
 **Create or replace a file:**
@@ -768,7 +752,7 @@ Created: YYYY-MM-DD
 - All notes use YAML frontmatter: type, status, created, updated, tags (minimum)
 - Wikilinks use [[Note Name]] format
 - .raw/ contains source documents — never modify them
-- wiki/index.md is the master catalog — update on every ingest
+- No master wiki/index.md — discovery is via folder hierarchy + frontmatter tags + per-folder _index.md sub-indexes (master hub is an Obsidian graph-view anti-pattern)
 - wiki/log.md is append-only — new entries go at the TOP
 
 ## Operations

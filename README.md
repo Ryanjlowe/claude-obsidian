@@ -147,8 +147,8 @@ Path: ~/path/to/vault
 
 When you need context not already in this project:
 1. Read wiki/hot.md first (recent context cache)
-2. If not enough, read wiki/index.md
-3. If you need domain details, read the relevant domain sub-index
+2. If not enough, Glob the relevant folder (e.g. wiki/concepts/*.md) or Grep frontmatter tags
+3. If you need domain details, read the relevant per-folder _index.md sub-index
 4. Only then drill into specific wiki pages
 
 Do NOT read the wiki for general coding questions or tasks unrelated to [domain].
@@ -177,7 +177,7 @@ Modes can be combined.
 
 A typical scaffold creates:
 - Folder structure for your chosen mode
-- `wiki/index.md`: master catalog
+- Per-folder `_index.md` sub-indexes (e.g. `wiki/concepts/_index.md`) — scoped, not a master hub
 - `wiki/log.md`: append-only operation log
 - `wiki/hot.md`: recent context cache
 - `wiki/overview.md`: executive summary

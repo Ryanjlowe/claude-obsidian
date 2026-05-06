@@ -124,8 +124,7 @@ If any check fails, abort and report the specific failure.
 
 **Commit** (only after user says "commit the fold"):
 1. `Write` the fold page to `wiki/folds/{FOLD-ID}.md`. (PostToolUse hook will auto-commit this.)
-2. `Edit` `wiki/index.md` to add the fold link under a `## Folds` section (create section if missing). (Hook auto-commits.)
-3. `Edit` `wiki/log.md` to prepend one entry:
+2. `Edit` `wiki/log.md` to prepend one entry:
    ```
    ## [YYYY-MM-DD] fold | batch-exponent-k{K} rollup of N entries
    - Location: wiki/folds/{FOLD-ID}.md
@@ -134,7 +133,10 @@ If any check fails, abort and report the specific failure.
    ```
    (Hook auto-commits.)
 
-Three auto-commits result. The user sees three separate `wiki: auto-commit` entries in git log. This is expected; do not attempt to suppress the hook.
+Two auto-commits result. The user sees two separate `wiki: auto-commit` entries in git log. This is expected; do not attempt to suppress the hook.
+
+> [!note] No `wiki/index.md` registration
+> Folds are discoverable via `wiki/folds/`, the log entry, and Obsidian's Quick Switcher (`⌘O`). Do not register them in a `wiki/index.md` hub page — that page is an Obsidian graph-view anti-pattern and is no longer maintained by this skill set. If you need a fold sub-index, create `wiki/folds/_index.md` (a scoped sub-index, not a master hub).
 
 ---
 
@@ -168,12 +170,11 @@ See `references/fold-template.md` for the canonical frontmatter and body layout.
 
 ## Reversal
 
-Committed fold reversal (three commits, land in this order):
+Committed fold reversal (two commits, land in this order):
 1. Remove the log.md fold entry.
-2. Remove the index.md entry.
-3. Delete the fold page file.
+2. Delete the fold page file.
 
-Or: `git revert` the three auto-commits. Child pages are untouched in either path.
+Or: `git revert` the two auto-commits. Child pages are untouched in either path.
 
 ---
 

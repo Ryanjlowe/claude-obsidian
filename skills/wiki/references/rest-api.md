@@ -15,7 +15,7 @@ KEY="your-api-key-here"
 ```bash
 curl -sk \
   -H "Authorization: Bearer $KEY" \
-  "$API/vault/wiki/index.md"
+  "$API/vault/wiki/hot.md"
 ```
 
 ---

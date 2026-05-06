@@ -247,10 +247,9 @@ In dry-run mode:
 In commit mode:
 
 - the fold page is written to `wiki/folds/`
-- `wiki/index.md` is updated
 - `wiki/log.md` gets a new fold entry
 
-The skill docs expect three separate write operations in commit mode, so three auto-commits from the hook are normal.
+The skill docs expect two separate write operations in commit mode, so two auto-commits from the hook are normal.
 
 Example commit command:
 

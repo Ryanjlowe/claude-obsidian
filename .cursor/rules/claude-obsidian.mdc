@@ -14,8 +14,8 @@ A Claude Code plugin and Obsidian vault that builds persistent, compounding know
 ## What This Project Is
 
 - **Vault root**: contains `wiki/` (agent-generated knowledge) and `.raw/` (source documents: immutable)
-- **Hot cache**: `wiki/hot.md` (~500 tokens) holds recent session context
-- **Index**: `wiki/index.md` is the master catalog Claude reads first
+- **Hot cache**: `wiki/hot.md` (~500 tokens) holds recent session context — read first
+- **Discovery**: folder hierarchy + frontmatter `tags:` + per-folder `_index.md` sub-indexes. There is no master `wiki/index.md` (graph-view anti-pattern)
 - **Skills**: 10 skills under `skills/<name>/SKILL.md` define ingest/query/lint/save/canvas/etc
 
 ## Skills Available

@@ -18,7 +18,6 @@ vault/
 │   ├── keywords/      # keyword clusters, target page assignments
 │   └── entities/      # brand, authors, topic hubs
 ├── _meta/
-│   ├── index.md
 │   └── log.md
 └── CLAUDE.md
 ```
@@ -63,7 +62,6 @@ vault/
 │   ├── dependencies/  # external deps, versions, risk assessment
 │   └── flows/         # data flows, request paths, auth flows
 ├── _meta/
-│   ├── index.md
 │   └── log.md
 └── CLAUDE.md
 ```
@@ -105,7 +103,6 @@ vault/
 │   ├── intel/         # competitor analysis, market research
 │   └── comms/         # synthesized meeting notes, key threads
 ├── _meta/
-│   ├── index.md
 │   └── log.md
 └── CLAUDE.md
 ```
@@ -144,7 +141,6 @@ vault/
 │   ├── areas/         # life areas: health, finances, career, creative
 │   └── resources/     # books, courses, tools worth referencing
 ├── _meta/
-│   ├── index.md
 │   ├── log.md
 │   └── hot-cache.md   # ~500-word summary of most active context
 └── CLAUDE.md
@@ -185,7 +181,6 @@ vault/
 │   ├── thesis/        # evolving synthesis: the "state of the field" pages
 │   └── gaps/          # open questions, contradictions, research needed
 ├── _meta/
-│   ├── index.md
 │   └── log.md
 └── CLAUDE.md
 ```
@@ -226,7 +221,6 @@ vault/
 │   ├── timeline/      # plot structure, curriculum sequence, chapter map
 │   └── synthesis/     # your own takeaways, questions, applications
 ├── _meta/
-│   ├── index.md
 │   └── log.md
 └── CLAUDE.md
 ```

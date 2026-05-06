@@ -17,10 +17,9 @@ claude-obsidian/
 ├── .claude-plugin/      ← Claude Code plugin manifest
 ├── _templates/          ← Obsidian Templater templates
 ├── wiki/                ← Generated knowledge base
-│   ├── hot.md           ← recent context cache (~500 tokens)
-│   ├── index.md         ← master catalog
+│   ├── hot.md           ← recent context cache (~500 tokens) — read first
 │   ├── log.md           ← append-only operation log
-│   ├── concepts/, entities/, sources/, comparisons/, questions/
+│   ├── concepts/, entities/, sources/, comparisons/, questions/  ← each has its own _index.md sub-index
 │   └── meta/dashboard.base ← Obsidian Bases dashboard
 └── .raw/                ← Immutable source documents
 ```

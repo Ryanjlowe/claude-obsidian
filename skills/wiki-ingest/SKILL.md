@@ -28,7 +28,7 @@ Before ingesting any file, check `.raw/.manifest.json` to avoid re-processing un
       "hash": "abc123",
       "ingested_at": "2026-04-08",
       "pages_created": ["wiki/sources/article-slug.md", "wiki/entities/Person.md"],
-      "pages_updated": ["wiki/index.md"]
+      "pages_updated": ["wiki/hot.md", "wiki/log.md"]
     }
   }
 }
@@ -107,9 +107,8 @@ Steps:
 5. **Create or update** concept pages for significant ideas and frameworks. Assign addresses to new concept pages.
 6. **Update** relevant domain page(s) and their `_index.md` sub-indexes.
 7. **Update** `wiki/overview.md` if the big picture changed.
-8. **Update** `wiki/index.md`. Add entries for all new pages.
-9. **Update** `wiki/hot.md` with this ingest's context.
-10. **Append** to `wiki/log.md` (new entries at the TOP):
+8. **Update** `wiki/hot.md` with this ingest's context.
+9. **Append** to `wiki/log.md` (new entries at the TOP):
     ```markdown
     ## [YYYY-MM-DD] ingest | Source Title
     - Source: `.raw/articles/filename.md`
@@ -118,7 +117,10 @@ Steps:
     - Pages updated: [[Page 3]], [[Page 4]]
     - Key insight: One sentence on what is new.
     ```
-11. **Check for contradictions.** If new info conflicts with existing pages, add `> [!contradiction]` callouts on both pages.
+10. **Check for contradictions.** If new info conflicts with existing pages, add `> [!contradiction]` callouts on both pages.
+
+> [!note] Why no `wiki/index.md`
+> Do **not** create or update `wiki/index.md`. A central hub page that links to every other page is an Obsidian anti-pattern: it dominates the graph view (every page collapses into a single hub-and-spoke shape) and duplicates the file explorer, Quick Switcher, and tag pane that Obsidian already provides. Discovery is handled by the folder hierarchy, frontmatter `tags:`, and `related:` cross-links between specific pages. Domain `_index.md` files (e.g. `wiki/business/_index.md`) are fine — they are scoped sub-indexes, not a master hub.
 
 ---
 
@@ -131,7 +133,7 @@ Steps:
 1. List all files to process. Confirm with user before starting.
 2. Process each source following the single ingest flow. Defer cross-referencing between sources until step 3.
 3. After all sources: do a cross-reference pass. Look for connections between the newly ingested sources.
-4. Update index, hot cache, and log once at the end (not per-source).
+4. Update hot cache and log once at the end (not per-source). Do not create or update a `wiki/index.md` hub page — see the note in **Single Source Ingest** above.
 5. Report: "Processed N sources. Created X pages, updated Y pages. Here are the key connections I found."
 
 Batch ingest is less interactive. For 30+ sources, expect significant processing time. Check in with the user after every 10 sources.
@@ -143,7 +145,7 @@ Batch ingest is less interactive. For 30+ sources, expect significant processing
 Token budget matters. Follow these rules during ingest:
 
 - Read `wiki/hot.md` first. If it contains the relevant context, don't re-read full pages.
-- Read `wiki/index.md` to find existing pages before creating new ones.
+- To find existing pages before creating new ones, use Glob (`wiki/**/*.md`) or the `/search/simple/` endpoint — do NOT read or maintain a `wiki/index.md` hub page (anti-pattern, see Single Source Ingest note).
 - Read only 3-5 existing pages per ingest. If you need 10+, you are reading too broadly.
 - Use PATCH for surgical edits. Never re-read an entire file just to update one field.
 - Keep wiki pages short. 100-300 lines max. If a page grows beyond 300 lines, split it.
@@ -178,7 +180,8 @@ Do not silently overwrite old claims. Flag and let the user decide.
 ## What Not to Do
 
 - **Source files under `.raw/` are immutable.** Do not modify the files that users drop there (articles, transcripts, images). The `.raw/.manifest.json` delta tracker and its `address_map` (DragonScale Mechanism 2) are the only files under `.raw/` that `wiki-ingest` itself maintains. Treat every other file under `.raw/` as read-only source content.
-- Do not create duplicate pages. Always check the index and search before creating.
+- Do not create duplicate pages. Glob `wiki/**/*.md` and search before creating.
+- Do not create or update `wiki/index.md`. It is an Obsidian graph-view anti-pattern (every page hubbing through one node) and duplicates the native file explorer / Quick Switcher / tag pane. Domain `_index.md` files are fine; a master hub is not.
 - Do not skip the log entry. Every ingest must be recorded.
 - Do not skip the hot cache update. It is what keeps future sessions fast.
 

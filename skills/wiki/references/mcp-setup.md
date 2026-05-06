@@ -92,7 +92,7 @@ flatpak run md.obsidian.Obsidian --cli --version
 obsidian-cli list /path/to/vault wiki/
 
 # Read a note
-obsidian-cli read /path/to/vault wiki/index.md
+obsidian-cli read /path/to/vault wiki/hot.md
 
 # Create or update a note
 obsidian-cli write /path/to/vault wiki/new-note.md < content.md

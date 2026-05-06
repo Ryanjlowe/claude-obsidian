@@ -163,8 +163,7 @@ sources:
 
 ## After Filing
 
-1. Update `wiki/index.md`. Add all new pages to the right sections
-2. Append to `wiki/log.md` (at the TOP):
+1. Append to `wiki/log.md` (at the TOP):
    ```
    ## [YYYY-MM-DD] autoresearch | [Topic]
    - Rounds: N
@@ -173,7 +172,10 @@ sources:
    - Synthesis: [[Research: Topic]]
    - Key finding: [one sentence]
    ```
-3. Update `wiki/hot.md` with the research summary
+2. Update `wiki/hot.md` with the research summary
+
+> [!note] Do not maintain `wiki/index.md`
+> Discovery is handled by folder hierarchy, frontmatter `tags:`, and `related:` cross-links between specific pages. A master hub page collapses Obsidian's graph view into a single hub-and-spoke shape and duplicates the native file explorer / Quick Switcher / tag pane. Domain `_index.md` sub-indexes (one per folder) are fine.
 
 ---
 

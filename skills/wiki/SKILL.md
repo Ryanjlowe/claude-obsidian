@@ -35,13 +35,12 @@ Standard wiki structure:
 
 ```
 wiki/
-├── index.md            # master catalog of all pages
 ├── log.md              # chronological record of all operations
 ├── hot.md              # hot cache: recent context summary (~500 words)
 ├── overview.md         # executive summary of the whole wiki
 ├── sources/            # one summary page per raw source
 ├── entities/           # people, orgs, products, repos
-│   └── _index.md
+│   └── _index.md       # scoped sub-index for this folder
 ├── concepts/           # ideas, patterns, frameworks
 │   └── _index.md
 ├── domains/            # top-level topic areas
@@ -52,6 +51,9 @@ wiki/
 ```
 
 Dot-prefixed folders (`.raw/`) are hidden in Obsidian's file explorer and graph view. Use this for source documents.
+
+> [!note] No master `wiki/index.md`
+> This skill set deliberately does NOT create a `wiki/index.md` master catalog. A single hub page that links every other page collapses Obsidian's graph view into a hub-and-spoke shape, making it useless for spotting clusters and gaps. It also duplicates the file explorer, Quick Switcher (`⌘O`), and tag pane that Obsidian already provides. Discovery is via folder hierarchy + frontmatter `tags:` + per-folder `_index.md` sub-indexes (which ARE fine — they are scoped, not master hubs) + `related:` cross-links between specific pages.
 
 ---
 
@@ -120,8 +122,8 @@ Steps:
 1. Determine the wiki mode. Read `references/modes.md` to show the 6 options and pick the best fit.
 2. Ask: "What is this vault for?" (one question, then proceed).
 3. Create full folder structure under `wiki/` based on the mode.
-4. Create domain pages + `_index.md` sub-indexes.
-5. Create `wiki/index.md`, `wiki/log.md`, `wiki/hot.md`, `wiki/overview.md`.
+4. Create domain pages + `_index.md` sub-indexes (scoped to each folder).
+5. Create `wiki/log.md`, `wiki/hot.md`, `wiki/overview.md`. Do NOT create `wiki/index.md` — see the master-hub anti-pattern note above.
 6. Create `_templates/` files for each note type.
 7. Apply visual customization. Read `references/css-snippets.md`. Create `.obsidian/snippets/vault-colors.css`.
 8. Create the vault CLAUDE.md using the template below.
@@ -149,14 +151,14 @@ Created: YYYY-MM-DD
 - All notes use YAML frontmatter: type, status, created, updated, tags (minimum)
 - Wikilinks use [[Note Name]] format: filenames are unique, no paths needed
 - .raw/ contains source documents: never modify them
-- wiki/index.md is the master catalog: update on every ingest
+- No master wiki/index.md — discovery is via folder hierarchy, tags, and per-folder _index.md sub-indexes
 - wiki/log.md is append-only: never edit past entries
 - New log entries go at the TOP of the file
 
 ## Operations
 
 - Ingest: drop source in .raw/, say "ingest [filename]"
-- Query: ask any question: Claude reads index first, then drills in
+- Query: ask any question: Claude reads hot.md first, then Globs/Greps the relevant folder, then drills in
 - Lint: say "lint the wiki" to run a health check
 - Archive: move cold sources to .archive/ to keep .raw/ clean
 ```
@@ -175,8 +177,8 @@ Path: ~/path/to/vault
 
 When you need context not already in this project:
 1. Read wiki/hot.md first (recent context, ~500 words)
-2. If not enough, read wiki/index.md (full catalog)
-3. If you need domain specifics, read wiki/<domain>/_index.md
+2. If not enough, Glob the relevant folder (e.g. wiki/concepts/*.md) or Grep frontmatter tags
+3. If you need domain specifics, read wiki/<domain>/_index.md (scoped sub-index)
 4. Only then read individual wiki pages
 
 Do NOT read the wiki for:
@@ -185,7 +187,7 @@ Do NOT read the wiki for:
 - Tasks unrelated to [your domain]
 ```
 
-This keeps token usage low. Hot cache costs ~500 tokens. Index costs ~1000 tokens. Individual pages cost 100-300 tokens each.
+This keeps token usage low. Hot cache costs ~500 tokens. A scoped Glob/Grep costs ~100 tokens. A folder `_index.md` costs ~500 tokens. Individual pages cost 100-300 tokens each.
 
 ---
 
@@ -196,7 +198,7 @@ Your job as the LLM:
 2. Scaffold wiki structure from user's domain description
 3. Route ingest, query, and lint to the correct sub-skill
 4. Maintain hot cache after every operation
-5. Always update index, sub-indexes, log, and hot cache on changes
+5. Update relevant per-folder `_index.md` sub-indexes, log, and hot cache on changes (do NOT maintain a master `wiki/index.md`)
 6. Always use frontmatter and wikilinks
 7. Never modify .raw/ sources
 

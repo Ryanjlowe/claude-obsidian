@@ -46,7 +46,8 @@ bash bin/setup-multi-agent.sh
 - `.raw/`: source documents, immutable (never modify)
 - `wiki/`: agent-generated knowledge (you own this)
 - `wiki/hot.md`: recent context cache (~500 tokens), read first at session start
-- `wiki/index.md`: master catalog
+- Per-folder `_index.md` (e.g. `wiki/concepts/_index.md`): scoped sub-indexes
+- No master `wiki/index.md` — discovery is via folder hierarchy + frontmatter `tags:` + Glob/Grep (master hub is an Obsidian graph-view anti-pattern)
 - `.raw/.manifest.json`: delta tracking for ingest
 
 ## Bootstrap

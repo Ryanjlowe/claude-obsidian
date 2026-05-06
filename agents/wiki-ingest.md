@@ -3,7 +3,7 @@ name: wiki-ingest
 description: >
   Parallel batch ingestion agent for the Obsidian wiki vault. Dispatched when multiple
   sources need to be ingested simultaneously. Processes one source fully (read, extract,
-  file entities and concepts, update index) then reports what was created and updated.
+  file entities and concepts) then reports what was created and updated.
   Use when the user says "ingest all", "batch ingest", or provides multiple files at once.
   <example>Context: User drops 5 transcript files into .raw/ and says "ingest all of these"
   assistant: "I'll dispatch parallel agents to process all 5 sources simultaneously."
@@ -26,13 +26,13 @@ You will be given:
 ## Your Process
 
 1. Read the source file completely.
-2. Read `wiki/index.md` to understand existing wiki pages and avoid duplication.
-3. Read `wiki/hot.md` for recent context.
+2. Read `wiki/hot.md` for recent context.
+3. Discover existing pages via Glob (`wiki/entities/*.md`, `wiki/concepts/*.md`) and Grep on filenames/frontmatter `tags:`. Do NOT read or maintain a master `wiki/index.md` — it is an Obsidian graph-view anti-pattern (see Do NOT below).
 4. Create a source summary page in `wiki/sources/`. Use proper frontmatter.
-5. For each significant person, org, product, or repo mentioned: check the index. Create or update the entity page in `wiki/entities/`.
-6. For each significant concept, idea, or framework: check the index. Create or update the concept page in `wiki/concepts/`.
+5. For each significant person, org, product, or repo mentioned: Glob `wiki/entities/` to check for an existing page. Create or update the entity page.
+6. For each significant concept, idea, or framework: Glob `wiki/concepts/` to check for an existing page. Create or update the concept page.
 7. Update relevant domain pages. Add a brief mention and wikilink to new pages.
-8. Update `wiki/entities/_index.md` and `wiki/concepts/_index.md`.
+8. Update `wiki/entities/_index.md` and `wiki/concepts/_index.md` (these are scoped per-folder sub-indexes, not a master hub — fine to maintain).
 9. Check for contradictions with existing pages. Add `> [!contradiction]` callouts where needed.
 10. Return a summary of what you created and updated.
 
@@ -49,7 +49,8 @@ If the vault has NOT adopted DragonScale, ignore this section and create pages w
 ## Do NOT
 
 - Modify anything in `.raw/`
-- Update `wiki/index.md` or `wiki/log.md` (the orchestrator does this after all agents finish)
+- Create or update `wiki/index.md` — it is an Obsidian graph-view anti-pattern (every page hubbing through one node) and duplicates the file explorer / Quick Switcher / tag pane. Per-folder `_index.md` sub-indexes are fine.
+- Update `wiki/log.md` (the orchestrator does this after all agents finish)
 - Update `wiki/hot.md` (the orchestrator does this at the end)
 - Create duplicate pages
 - Call `scripts/allocate-address.sh` from inside a parallel sub-agent (single-writer rule above)
